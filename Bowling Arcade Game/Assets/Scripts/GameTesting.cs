@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+
 
 public class GameTesting : MonoBehaviour {
 
@@ -9,8 +11,11 @@ public class GameTesting : MonoBehaviour {
 	public Transform TestShootStartPoint;
 	public GameObject BallPrefabs;
 
-	public Vector3 Force;
-    
+	public Vector3 MaxForce;
+	public float powerBar;
+	private float timePressed = 0;
+
+	[SerializeField] private AnimationCurve powerBarCurve;
 
 	// Use this for initialization
 	void Start () {
@@ -18,22 +23,47 @@ public class GameTesting : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if(TestShootTrigger){
+	void Update () 
+	{
+		if(TestShootTrigger)
+		{
 			TestShootTrigger = false;
 			TestShoot();
 		}
         
-		if(Input.GetMouseButtonUp(0)){
-			Debug.Log(ReturnClickedObject().name);
+		if (Input.GetMouseButtonDown(0))
+		{
+			timePressed = 0;
 		}
 
+		if (Input.GetMouseButton(0))
+		{
+			timePressed += Time.deltaTime;
+			powerBar = timePressed % 2f;
+			powerBar = powerBarCurve.Evaluate(powerBar);
+			GameController.Instance.powerBarFill.fillAmount = powerBar;
+		}
+
+		if(Input.GetMouseButtonUp(0))
+		{
+			Debug.Log(ReturnClickedObject().name);
+
+		}
+        
 	}
 
 
-	void TestShoot(Vector3 start )
-	{ 
-		GameObject ball = Instantiate(BallPrefabs, start, Quaternion.identity);
+	void TestShoot(Vector3? start = null )
+	{
+		GameObject ball;
+		if (start != null){
+			ball = Instantiate(BallPrefabs, (Vector3)start, Quaternion.identity);
+		}
+		else{
+            ball = Instantiate(BallPrefabs, TestShootStartPoint.position, Quaternion.identity);
+		}
+
+
         Rigidbody rb = null;
         if (ball.GetComponent<Rigidbody>() != null)
         {
@@ -44,20 +74,7 @@ public class GameTesting : MonoBehaviour {
             rb = ball.AddComponent<Rigidbody>();
         }
 
-        rb.AddForce(Force, ForceMode.Impulse);
-	}
-
-	void TestShoot(){
-		GameObject ball = Instantiate(BallPrefabs, TestShootStartPoint.position, Quaternion.identity);
-		Rigidbody rb = null;
-		if (ball.GetComponent<Rigidbody>() != null){
-			rb = ball.GetComponent<Rigidbody>();
-		}
-		else{
-			rb =  ball.AddComponent<Rigidbody>();
-		}
-
-		rb.AddForce(Force, ForceMode.Impulse);
+		rb.AddForce(MaxForce * powerBar, ForceMode.Impulse);
 	}
 
 	public GameObject ReturnClickedObject()
