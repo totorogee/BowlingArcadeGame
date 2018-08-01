@@ -19,39 +19,117 @@ public class MainSceneUI : MonoBehaviour {
 	[SerializeField] private Button endGameRestartButton;
 	[SerializeField] private Button endGameMainMenuButton;
 
-	private int startCounter;
-	private float startingTime;
+	[SerializeField] private List<string> rankText = new List<string>();
+	[SerializeField] private List<string> endText = new List<string>();
+    
+	private int rank = 1;
+
+	// Count Down for game to Start;
+	private int startCountDown = 3 ;
+
+	// Counter for start game count down
+	private float startCounter;
 	private bool gameReady = false;
+
+	// Count Down for game to end;
+    private int endCountDown;
+    
+    // Counter for end game count down
+    private float endCounter;
+	private bool end = false;
+
+	// Should be set by game config
+	private int gameTotalTime = 5;
 
 
 	private void OnEnable()
-	{
+    {
+		endGameRestartButton.onClick.AddListener(OnRestart);
+		endGameMainMenuButton.onClick.AddListener(OnBackToMain);
 
-	}
+    }
+
+    private void OnDisable()
+    {
+		endGameRestartButton.onClick.RemoveAllListeners();
+		endGameMainMenuButton.onClick.RemoveAllListeners();
+
+    }
 
 	// Use this for initialization
 	void Start () 
 	{
-		startingTime = Time.time;
-		startCounter = 3;
-        countDownText.text = startCounter.ToString();
+		startCounter = Time.time;
+		startCountDown = 3;
+		countDownText.text = startCountDown.ToString();
+
+		endCountDown = gameTotalTime;
+		inGameTime.text = endCountDown.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (startCounter >=0)
+		if (!end)
 		{
-			countDownText.text = startCounter.ToString();
-			startCounter = 3 - Mathf.FloorToInt(Time.time - startingTime);
+			if (!gameReady)
+            {
+                if (startCountDown >= 0)
+                {
+                    countDownText.text = startCountDown.ToString();
+                    startCountDown = 3 - Mathf.FloorToInt(Time.time - startCounter);
+                }
+                else
+                {
+                    gameReady = true;
+                    GameTesting.Instance.GameStart = true;
+                    countDownScreen.gameObject.SetActive(false);
 
-		}
-		else
-		{
-			gameReady = true;
-			GameTesting.Instance.GameStart = true;
-			countDownScreen.gameObject.SetActive(false);
-		}
+                    endCountDown = gameTotalTime;
+                    endCounter = Time.time;
+                }
+            }
 
+            if (gameReady)
+            {
+                if (endCountDown >= 0)
+                {
+                    inGameTime.text = endCountDown.ToString();
+                    endCountDown = gameTotalTime - Mathf.FloorToInt(Time.time - endCounter);
+                }
+                else
+                {
+                    gameReady = false;
+                    GameTesting.Instance.GameStart = false;
+                    endGameScore.text = GameController.Instance.TotalScore.ToString();
+                    // DEBUG
+                    rank = Random.Range(0, 5);
+
+                    endGameRank.text = rankText[rank];
+                    endGameText.text = endText[rank];
+
+                    endGamePopup.gameObject.SetActive(true);
+                    endGameRestartButton.gameObject.SetActive(true);
+
+                    if (rank == 1)
+                    {
+                        endGameRestartButton.gameObject.SetActive(false);
+                    }
+					end = true;
+                }
+            }
+		}
 	}
+
+	void OnRestart()
+	{
+		Application.Instance.LoadScene(1);
+	}
+	void OnBackToMain() 
+	{ 
+		Application.Instance.LoadScene(0);
+	}
+		
+
+
 }

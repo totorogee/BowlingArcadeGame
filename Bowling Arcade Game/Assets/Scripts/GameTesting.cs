@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class GameTesting : MonoBehaviour {
 
+	public static GameTesting Instance;
+
 	public bool TestShootTrigger = false;
 	public Transform TestShootStartPoint;
 	public GameObject BallPrefabs;
@@ -15,7 +17,14 @@ public class GameTesting : MonoBehaviour {
 	public float powerBar;
 	private float timePressed = 0;
 
+	public bool GameStart = false;
+
 	[SerializeField] private AnimationCurve powerBarCurve;
+
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -25,30 +34,35 @@ public class GameTesting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if(TestShootTrigger)
+		if (GameStart)
 		{
-			TestShootTrigger = false;
-			TestShoot();
-		}
-        
-		if (Input.GetMouseButtonDown(0))
-		{
-			timePressed = 0;
+			if (TestShootTrigger)
+            {
+                TestShootTrigger = false;
+                TestShoot();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                timePressed = 0;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                timePressed += Time.deltaTime;
+                powerBar = timePressed % 2f;
+                powerBar = powerBarCurve.Evaluate(powerBar);
+                GameController.Instance.powerBarFill.fillAmount = powerBar;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Debug.Log(ReturnClickedObject().name);
+
+            }
 		}
 
-		if (Input.GetMouseButton(0))
-		{
-			timePressed += Time.deltaTime;
-			powerBar = timePressed % 2f;
-			powerBar = powerBarCurve.Evaluate(powerBar);
-			GameController.Instance.powerBarFill.fillAmount = powerBar;
-		}
 
-		if(Input.GetMouseButtonUp(0))
-		{
-			Debug.Log(ReturnClickedObject().name);
-
-		}
         
 	}
 
@@ -89,6 +103,7 @@ public class GameTesting : MonoBehaviour {
 
         if (target != null)
         {
+			if (target.name == "Plane")
 			TestShoot(hit.point + new Vector3 (0,1.2f,0));
         }
 

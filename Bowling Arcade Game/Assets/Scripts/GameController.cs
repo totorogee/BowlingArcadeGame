@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 	private bool scoreUpdated = true;
 
 	[SerializeField] private Text scoreText;
+	[SerializeField] public Image powerBarFill;
 
 	public int TotalScore {
 		get {
@@ -33,8 +34,11 @@ public class GameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (scoreUpdated){
+		if (scoreUpdated)
+		{
 			scoreText.text = totalScore.ToString();
 		}
+
+
 	}
 }
