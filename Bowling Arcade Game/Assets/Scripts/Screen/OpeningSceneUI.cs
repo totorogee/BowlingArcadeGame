@@ -64,5 +64,6 @@ public class OpeningSceneUI : MonoBehaviour {
 		}
 
 		stageText.text = StageSetting.Instance.GetStageDatas()[StageSetting.Instance.SelectedStage].StageName;
+
 	}
 }
