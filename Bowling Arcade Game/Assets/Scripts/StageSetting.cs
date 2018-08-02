@@ -74,7 +74,7 @@ public class StageSetting : MonoBehaviour {
 
 	public void InitTarget(Target target, int score , float size)
 	{
-
+        
 		if (size <=0.1)
 		{
 			target.gameObject.SetActive(false);
@@ -83,7 +83,7 @@ public class StageSetting : MonoBehaviour {
 		else 
 		{
 			target.gameObject.SetActive(true);
-			target.transform.localScale = Vector3.one * size;
+			target.transform.localScale = new Vector3 (size , 1 , size);
 			target.SetScore(score);
 		}
 	}
