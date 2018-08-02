@@ -20,11 +20,17 @@ public class Target : MonoBehaviour {
 		
 	}
 
-	private void OnCollisionEnter(Collision collision)
+	private void OnTriggerEnter(Collider other)
 	{
-		Debug.Log("hit : " + collision.collider.tag);
-		GameController.Instance.TotalScore += score;
+        if (other.tag == "Balls")
+        {
+            other.enabled = false;
+			other.gameObject.layer = LayerMask.NameToLayer("FallingBall");
+        }
+        GameController.Instance.TotalScore += score;
 	}
+
+
 
 	public void SetScore(int score)
 	{
