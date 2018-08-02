@@ -11,7 +11,6 @@ public class Target : MonoBehaviour {
 	{
         if (other.tag == "Balls")
         {
-            other.enabled = false;
 			other.gameObject.layer = LayerMask.NameToLayer("FallingBall");
         }
         GameController.Instance.TotalScore += score;
