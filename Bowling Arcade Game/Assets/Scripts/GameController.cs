@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour {
 
 	[SerializeField] private Text scoreText;
 	[SerializeField] public Image powerBarFill;
+	[SerializeField] List<Target> targets = new List<Target>();
 
 	public int TotalScore {
 		get {
@@ -26,10 +27,10 @@ public class GameController : MonoBehaviour {
 	{
 		Instance = this;
 	}
-
-	// Use this for initialization
-	void Start () {
-		
+    
+	void Start () 
+	{
+		StageSetting.Instance.InitStage(targets);
 	}
 	
 	// Update is called once per frame

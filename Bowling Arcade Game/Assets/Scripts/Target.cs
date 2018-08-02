@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Target : MonoBehaviour {
 
 	[SerializeField] private int score = 100;
+	[SerializeField] private Text scoreText;
     
 
 
@@ -22,6 +24,15 @@ public class Target : MonoBehaviour {
 	{
 		Debug.Log("hit : " + collision.collider.tag);
 		GameController.Instance.TotalScore += score;
+	}
+
+	public void SetScore(int score)
+	{
+		this.score = score;
+		scoreText.text = score.ToString();
+		if (score == 0){
+			scoreText.text = " ";
+		}
 	}
 
 }

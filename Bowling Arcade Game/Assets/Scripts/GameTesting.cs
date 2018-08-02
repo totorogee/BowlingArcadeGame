@@ -18,6 +18,7 @@ public class GameTesting : MonoBehaviour {
 	private float timePressed = 0;
 
 	public bool GameStart = false;
+	public float chargeSpeedMultiplier = 1;
 
 	[SerializeField] private AnimationCurve powerBarCurve;
 
@@ -49,7 +50,7 @@ public class GameTesting : MonoBehaviour {
 
             if (Input.GetMouseButton(0))
             {
-                timePressed += Time.deltaTime;
+				timePressed += Time.deltaTime * chargeSpeedMultiplier;
                 powerBar = timePressed % 2f;
                 powerBar = powerBarCurve.Evaluate(powerBar);
                 GameController.Instance.powerBarFill.fillAmount = powerBar;

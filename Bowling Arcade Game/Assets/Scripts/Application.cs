@@ -9,8 +9,16 @@ public class Application : MonoBehaviour {
 
 	private void Awake()
 	{
-		Instance = this;
-		DontDestroyOnLoad(this.gameObject);
+		if (Instance != null)
+		{
+			Destroy(this.gameObject);
+		}
+		else
+		{
+			Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+		}
+
 	}
 
 	// Use this for initialization
