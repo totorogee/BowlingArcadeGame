@@ -7,21 +7,43 @@ using Newtonsoft;
 
 public class StageSetting : MonoBehaviour {
 
+	public static StageSetting Instance;
+
+	public int SelectedStage
+	{
+		get
+		{
+			return selectedStage;
+		}
+		set
+		{         
+			selectedStage = value;
+		}
+	}
+
+	public int StageCount
+	{
+		get { return stageCount; }
+	}
+
+	private int selectedStage = 0;
+	private int stageCount = 1;
+
 	[SerializeField] private TextAsset stageConfig;
 	private Dictionary<int, StageData> avaliableIStageDic;
 
 	public List<StageData> Datas =new List<StageData>();
 
-	// Use this for initialization
-	void Start () {
-		Datas = GetStageDatas();
-		Debug.Log(Datas.Count + " " + Datas[1].Score9);
+	private void Awake()
+	{
+		Instance = this;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
+	void Start () {
+		Datas = GetStageDatas();
+		stageCount = Datas.Count;
 	}
+
 
 	public List<StageData> GetStageDatas()
     {
