@@ -37,8 +37,7 @@ public class MainSceneUI : MonoBehaviour {
     // Counter for end game count down
     private float endCounter;
 	private bool end = false;
-
-	// Should be set by game config
+    
 	private int gameTotalTime = 5;
 
 
@@ -62,6 +61,8 @@ public class MainSceneUI : MonoBehaviour {
 		startCounter = Time.time;
 		startCountDown = 3;
 		countDownText.text = startCountDown.ToString();
+
+		gameTotalTime = StageSetting.Instance.TimeForStage();
 
 		endCountDown = gameTotalTime;
 		inGameTime.text = endCountDown.ToString();

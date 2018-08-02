@@ -87,4 +87,8 @@ public class StageSetting : MonoBehaviour {
 			target.SetScore(score);
 		}
 	}
+
+	public int TimeForStage(){
+		return Datas[SelectedStage].TimeAllowed;
+	}
 }
