@@ -106,7 +106,7 @@ public class GameLogic : MonoBehaviour
 
         if (target != null)
         {
-			if (target.name == "Plane")
+			if (target.name == "ShootArea")
 			Shoot(hit.point + new Vector3 (0,1.2f,0));
         }
       
