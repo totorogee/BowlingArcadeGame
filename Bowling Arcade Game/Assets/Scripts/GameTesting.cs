@@ -1,47 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
+public class GameLogic : MonoBehaviour 
+{
+	public static GameLogic  Instance;
 
-public class GameTesting : MonoBehaviour {
-
-	public static GameTesting Instance;
-
-	public bool TestShootTrigger = false;
-	public Transform TestShootStartPoint;
-	public GameObject BallPrefabs;
-
-	public Vector3 MaxForce;
-	public float powerBar;
 	private float timePressed = 0;
-
-	public bool GameStart = false;
-	public float chargeSpeedMultiplier = 1;
+	private bool gameStart = false;
+	private float chargeSpeedMultiplier = 1;
 
 	[SerializeField] private AnimationCurve powerBarCurve;
+	[SerializeField] private GameObject BallPrefabs;
+    [SerializeField] private Vector3 MaxForce;
+    [SerializeField] private float powerBar;
+
+	public float ChargeSpeedMultiplier
+    {
+        get
+        {
+            return chargeSpeedMultiplier;
+        }
+        set
+        {
+            chargeSpeedMultiplier = value;
+        }
+    }
+
+	public bool GameStart
+    {
+        get 
+		{ 
+			return gameStart; 
+		}
+        set 
+		{ 
+			gameStart = value; 
+		}
+    }
 
 	private void Awake()
 	{
+		if (Instance !=null)
+		{
+			Destroy(Instance);
+		}
 		Instance = this;
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-
-	// Update is called once per frame
 	void Update () 
 	{
 		if (GameStart)
 		{
-			if (TestShootTrigger)
-            {
-                TestShootTrigger = false;
-                TestShoot();
-            }
 
             if (Input.GetMouseButtonDown(0))
             {
@@ -55,28 +63,14 @@ public class GameTesting : MonoBehaviour {
                 powerBar = powerBarCurve.Evaluate(powerBar);
                 GameController.Instance.powerBarFill.fillAmount = powerBar;
             }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                Debug.Log(ReturnClickedObject().name);
-
-            }
 		}
 	}
 
-
-	void TestShoot(Vector3? start = null )
+	void Shoot(Vector3 start)
 	{
-		GameObject ball;
-		if (start != null){
-			ball = Instantiate(BallPrefabs, (Vector3)start, Quaternion.identity);
-		}
-		else{
-            ball = Instantiate(BallPrefabs, TestShootStartPoint.position, Quaternion.identity);
-		}
-
-
+		GameObject ball = Instantiate(BallPrefabs, start, Quaternion.identity);
         Rigidbody rb = null;
+
         if (ball.GetComponent<Rigidbody>() != null)
         {
             rb = ball.GetComponent<Rigidbody>();
@@ -102,11 +96,9 @@ public class GameTesting : MonoBehaviour {
         if (target != null)
         {
 			if (target.name == "Plane")
-			TestShoot(hit.point + new Vector3 (0,1.2f,0));
+			Shoot(hit.point + new Vector3 (0,1.2f,0));
         }
-
-		Debug.Log(hit.point);
-
+      
         return target;
     }
 

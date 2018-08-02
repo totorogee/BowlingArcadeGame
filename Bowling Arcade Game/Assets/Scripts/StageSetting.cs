@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using Newtonsoft;
 
-
-public class StageSetting : MonoBehaviour {
-
+public class StageSetting : MonoBehaviour 
+{
 	public static StageSetting Instance;
 	public List<StageData> Datas = new List<StageData>();
 
 	private Dictionary<int, StageData> avaliableIStageDic;
 	private int selectedStage = 0;
 	private int stageCount = 1;
+
 	[SerializeField] private PhysicMaterial ballMaterial;
 	[SerializeField] private TextAsset stageConfig;
 
@@ -45,7 +43,10 @@ public class StageSetting : MonoBehaviour {
 		stageCount = Datas.Count;
 	}
 
-
+    /// <summary>
+	/// Gets the stage datas on the config text. See https://docs.google.com/spreadsheets/d/111CWJuutraCiOK7WDOeW3XsgWInL8TKAzI8LvNLYLkU/edit#gid=0
+    /// </summary>
+    /// <returns>The stage datas.</returns>
 	public List<StageData> GetStageDatas()
     {
 		if (avaliableIStageDic == null)
@@ -56,11 +57,17 @@ public class StageSetting : MonoBehaviour {
 		return new List<StageData>(avaliableIStageDic.Values);
     }
     
+    /// <summary>
+    /// Setting Up Stage for target size, score, ball bounciness and charging speed.
+    /// </summary>
+    /// <param name="targets">Targets in the plane.</param>
 	public void InitStage(List<Target> targets)
 	{
 		StageData data = GetStageDatas()[SelectedStage];
 		ballMaterial.bounciness = data.BallBounciness;
-		GameTesting.Instance.chargeSpeedMultiplier = data.PowerChargeSpeed;
+		GameLogic.Instance.ChargeSpeedMultiplier = data.PowerChargeSpeed;
+
+		// Target[0] is the buttom hole; The shape of the wall is different
 		InitTarget(targets[0], data.Score0, data.Size0);
 		InitTarget(targets[1], data.Score1, data.Size1);
 		InitTarget(targets[2], data.Score2, data.Size2);
@@ -71,9 +78,14 @@ public class StageSetting : MonoBehaviour {
 		InitTarget(targets[7], data.Score7, data.Size7);
 		InitTarget(targets[8], data.Score8, data.Size8);
 		InitTarget(targets[9], data.Score9, data.Size9);
-
 	}
 
+    /// <summary>
+    /// Inits each target.
+    /// </summary>
+    /// <param name="target">Target object with target script.</param>
+	/// <param name="score">Target's Score.</param>
+	/// <param name="size">Target's Size.</param>
 	public void InitTarget(Target target, int score , float size)
 	{
         
@@ -90,12 +102,18 @@ public class StageSetting : MonoBehaviour {
 		}
 	}
 
+    /// <summary>
+    /// Get the time allowed for current stage
+    /// </summary>
 	public int TimeForStage()
 	{
 		return Datas[SelectedStage].TimeAllowed;
 	}
 
-	public string GetStage()
+    /// <summary>
+    /// Gets the stage name
+    /// </summary>
+	public string GetStageName()
     {
 		return Datas[SelectedStage].StageName;
     }

@@ -1,21 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-
 	private const float destoryTime = 5;
 	private float counter = 0;
 	private bool destoryTiggered = false;
 
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	void Update () 
 	{
 		if(destoryTiggered && Time.time > counter)
@@ -34,6 +24,5 @@ public class Ball : MonoBehaviour
 	private void OnCollisionEnter(Collision collision)
     {
 		DelayDestory();
-    }
-
+	}
 }

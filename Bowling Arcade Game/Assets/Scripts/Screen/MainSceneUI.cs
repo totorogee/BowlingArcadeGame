@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,7 +39,6 @@ public class MainSceneUI : MonoBehaviour {
     // Counter for end game count down
     private float endCounter;
 	private bool end = false;
-    
 	private int gameTotalTime = 5;
 
 
@@ -48,17 +46,14 @@ public class MainSceneUI : MonoBehaviour {
     {
 		endGameRestartButton.onClick.AddListener(OnRestart);
 		endGameMainMenuButton.onClick.AddListener(OnBackToMain);
-
     }
 
     private void OnDisable()
     {
 		endGameRestartButton.onClick.RemoveAllListeners();
 		endGameMainMenuButton.onClick.RemoveAllListeners();
-
     }
-
-	// Use this for initialization
+    
 	void Start () 
 	{
 		startCounter = Time.time;
@@ -70,8 +65,7 @@ public class MainSceneUI : MonoBehaviour {
 		endCountDown = gameTotalTime;
 		inGameTime.text = endCountDown.ToString();
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
 		if (Input.GetKey("escape"))
@@ -91,7 +85,7 @@ public class MainSceneUI : MonoBehaviour {
                 else
                 {
                     gameReady = true;
-                    GameTesting.Instance.GameStart = true;
+					GameLogic.Instance.GameStart = true;
                     countDownScreen.gameObject.SetActive(false);
 
                     endCountDown = gameTotalTime;
@@ -109,7 +103,7 @@ public class MainSceneUI : MonoBehaviour {
                 else
                 {
                     gameReady = false;
-                    GameTesting.Instance.GameStart = false;
+					GameLogic.Instance.GameStart = false;
                     endGameScore.text = GameController.Instance.TotalScore.ToString();
 
 					rank = SetRank(GameController.Instance.TotalScore);
@@ -176,7 +170,7 @@ public class MainSceneUI : MonoBehaviour {
 		}
 
 		record.Insert(result - 1, finalScore);
-		stage.Insert(result - 1, StageSetting.Instance.GetStage());
+		stage.Insert(result - 1, StageSetting.Instance.GetStageName());
 
 		GameSave.First_Score = record[0];
 		GameSave.Second_Score = record[1];
@@ -192,5 +186,4 @@ public class MainSceneUI : MonoBehaviour {
 
 		return result;
 	}
-    
 }

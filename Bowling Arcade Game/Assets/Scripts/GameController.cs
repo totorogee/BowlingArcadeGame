@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour 
+{
 
 	public static GameController Instance;
 	public int totalScore = 0;
@@ -32,14 +32,12 @@ public class GameController : MonoBehaviour {
 	{
 		StageSetting.Instance.InitStage(targets);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update () 
+	{
 		if (scoreUpdated)
 		{
 			scoreText.text = totalScore.ToString();
 		}
-
-
 	}
 }
