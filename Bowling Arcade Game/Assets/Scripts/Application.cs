@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Application : MonoBehaviour {
+public class GameApplication : MonoBehaviour {
 
-	public static Application Instance;
+	public static GameApplication Instance;
 
 	private void Awake()
 	{
@@ -39,4 +39,6 @@ public class Application : MonoBehaviour {
 		}
 		SceneManager.LoadScene(number, LoadSceneMode.Single);
     }
+
+
 }

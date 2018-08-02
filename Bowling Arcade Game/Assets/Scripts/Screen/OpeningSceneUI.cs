@@ -40,6 +40,21 @@ public class OpeningSceneUI : MonoBehaviour {
     
 	}
 
+	private void Update()
+	{
+		if (Input.GetKey("escape"))
+        {
+			if (leaderBoard.gameObject.activeSelf)
+			{
+				leaderBoard.gameObject.SetActive(false);
+			}
+			else
+			{
+				Application.Quit();
+			}
+        }
+	}
+
 	void OpenLeaderBoard()
 	{
 		leaderBoard.gameObject.SetActive(true);
@@ -47,7 +62,7 @@ public class OpeningSceneUI : MonoBehaviour {
 
 	void StartGame()
     {
-		Application.Instance.LoadScene(1);
+		GameApplication.Instance.LoadScene(1);
     }
 
 	void CloseLeaderBoard()

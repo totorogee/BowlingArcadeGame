@@ -74,6 +74,11 @@ public class MainSceneUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (Input.GetKey("escape"))
+        {
+			OnBackToMain();
+        }
+
 		if (!end)
 		{
 			if (!gameReady)
@@ -127,11 +132,11 @@ public class MainSceneUI : MonoBehaviour {
 
 	void OnRestart()
 	{
-		Application.Instance.LoadScene(1);
+		GameApplication.Instance.LoadScene(1);
 	}
 	void OnBackToMain() 
 	{ 
-		Application.Instance.LoadScene(0);
+		GameApplication.Instance.LoadScene(0);
 	}
 		
 	private int SetRank(int finalScore)
