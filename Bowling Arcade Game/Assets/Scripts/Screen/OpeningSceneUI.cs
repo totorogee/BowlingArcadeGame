@@ -12,23 +12,27 @@ public class OpeningSceneUI : MonoBehaviour {
 	[SerializeField] private Button startGameButton;
 	[SerializeField] private Button leaderBoardBackButton;
 	[SerializeField] private Button selectStageButton;
+	[SerializeField] private Button deleteScoreButton;
 	[SerializeField] private Text stageText;
 
 	private void OnEnable()
 	{
+
 		leaderBoardButton.onClick.AddListener(OpenLeaderBoard);
 		startGameButton.onClick.AddListener(StartGame);
 		leaderBoardBackButton.onClick.AddListener(CloseLeaderBoard);
 		selectStageButton.onClick.AddListener(SelectStage);
+		deleteScoreButton.onClick.AddListener(DeleteRecord);
 	}
 
 	private void OnDisable()
-    {
+	{
 		leaderBoardButton.onClick.RemoveAllListeners();
-		startGameButton.onClick.RemoveAllListeners();
-		leaderBoardBackButton.onClick.RemoveAllListeners();
-		selectStageButton.onClick.RemoveAllListeners();
-    }
+        startGameButton.onClick.RemoveAllListeners();
+        leaderBoardBackButton.onClick.RemoveAllListeners();
+        selectStageButton.onClick.RemoveAllListeners();
+		deleteScoreButton.onClick.RemoveAllListeners();
+	}
 
 	private void Start()
 	{
@@ -53,7 +57,6 @@ public class OpeningSceneUI : MonoBehaviour {
 
 	void SelectStage()
 	{
-		
 		if (StageSetting.Instance.SelectedStage < StageSetting.Instance.StageCount -1 )
 		{
 			StageSetting.Instance.SelectedStage++;
@@ -65,5 +68,11 @@ public class OpeningSceneUI : MonoBehaviour {
 
 		stageText.text = StageSetting.Instance.GetStageDatas()[StageSetting.Instance.SelectedStage].StageName;
 
+	}
+
+	void DeleteRecord()
+	{
+		PlayerPrefs.DeleteAll();
+		leaderBoard.gameObject.SetActive(false);
 	}
 }

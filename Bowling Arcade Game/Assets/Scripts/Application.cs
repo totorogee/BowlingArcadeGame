@@ -11,14 +11,13 @@ public class Application : MonoBehaviour {
 	{
 		if (Instance != null)
 		{
-			Destroy(this.gameObject);
-		}
-		else
-		{
-			Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+			Destroy(Instance);
+			Destroy(Instance.gameObject);
 		}
 
+			Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+   
 	}
 
 	// Use this for initialization

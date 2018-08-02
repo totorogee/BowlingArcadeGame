@@ -90,7 +90,13 @@ public class StageSetting : MonoBehaviour {
 		}
 	}
 
-	public int TimeForStage(){
+	public int TimeForStage()
+	{
 		return Datas[SelectedStage].TimeAllowed;
 	}
+
+	public string GetStage()
+    {
+		return Datas[SelectedStage].StageName;
+    }
 }
