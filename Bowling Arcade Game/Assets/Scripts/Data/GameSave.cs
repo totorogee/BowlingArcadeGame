@@ -9,19 +9,19 @@ public static class GameSave
     {
         get
         {
-            return PlayerPrefs.GetInt("First", 100);
+            return PlayerPrefs.GetInt("First", 10);
         }
         set
         {
 			PlayerPrefs.SetInt("First", value);
         }
     }
-
+    
 	public static int Second_Score
     {
         get
         {
-			return PlayerPrefs.GetInt("Second", 80);
+			return PlayerPrefs.GetInt("Second", 0);
         }
         set
         {
@@ -33,7 +33,7 @@ public static class GameSave
     {
         get
         {
-			return PlayerPrefs.GetInt("Third", 60);
+			return PlayerPrefs.GetInt("Third", 0);
         }
         set
         {
@@ -45,7 +45,7 @@ public static class GameSave
     {
         get
         {
-			return PlayerPrefs.GetInt("Fourth", 40);
+			return PlayerPrefs.GetInt("Fourth", 0);
         }
         set
         {
@@ -56,12 +56,71 @@ public static class GameSave
     {
         get
         {
-			return PlayerPrefs.GetInt("Fifth", 20);
+			return PlayerPrefs.GetInt("Fifth", 0);
         }
         set
         {
 			PlayerPrefs.SetInt("Fifth", value);
         }
     }
+
+	public static string First_Stage
+    {
+        get
+        {
+			return PlayerPrefs.GetString("First_Stage", "Easy");
+        }
+        set
+        {
+			PlayerPrefs.GetString("First_Stage", value);
+        }
+    }
+
+	public static string Second_Stage
+    {
+        get
+        {
+			return PlayerPrefs.GetString("Second_Stage", " ");
+        }
+        set
+        {
+			PlayerPrefs.GetString("Second_Stage", value);
+        }
+    }
+
+	public static string Third_Stage
+    {
+        get
+        {
+			return PlayerPrefs.GetString("Third_Stage", " ");
+        }
+        set
+        {
+			PlayerPrefs.GetString("Third_Stage", value);
+        }
+    }
+	public static string Fourth_Stage
+    {
+        get
+        {
+			return PlayerPrefs.GetString("Fourth_Stage", " ");
+        }
+        set
+        {
+			PlayerPrefs.GetString("Fourth_Stage", value);
+        }
+    }
+	public static string Fifth_Stage
+    {
+        get
+        {
+			return PlayerPrefs.GetString("Fifth_Stage", " ");
+        }
+        set
+        {
+			PlayerPrefs.GetString("Fifth_Stage", value);
+        }
+    }
+
 
 }
