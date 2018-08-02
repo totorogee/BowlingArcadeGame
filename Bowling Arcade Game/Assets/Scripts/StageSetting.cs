@@ -30,7 +30,9 @@ public class StageSetting : MonoBehaviour {
 
     public int StageCount
     {
-        get { return stageCount; }
+        get {
+			stageCount = GetStageDatas().Count;
+			return stageCount; }
     }
     
 	private void Awake()
