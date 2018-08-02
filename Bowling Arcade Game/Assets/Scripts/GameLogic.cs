@@ -2,11 +2,13 @@
 
 public class GameLogic : MonoBehaviour 
 {
-	public static GameLogic  Instance;
+	public static GameLogic Instance;
 
 	private float timePressed = 0;
 	private bool gameStart = false;
 	private float chargeSpeedMultiplier = 1;
+	private float coolTime = 0.5f;
+	private float coolTimeReady = 0f;
 
 	[SerializeField] private AnimationCurve powerBarCurve;
 	[SerializeField] private GameObject BallPrefabs;
@@ -66,7 +68,11 @@ public class GameLogic : MonoBehaviour
 
 			if(Input.GetMouseButtonUp(0))
 			{
-				ReturnClickedObject();
+				if (Time.time > coolTimeReady)
+                {
+                    coolTimeReady = Time.time + coolTime;
+                    ReturnClickedObject();
+                }
 			}
 		}
 	}
