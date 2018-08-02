@@ -63,6 +63,11 @@ public class GameLogic : MonoBehaviour
                 powerBar = powerBarCurve.Evaluate(powerBar);
                 GameController.Instance.powerBarFill.fillAmount = powerBar;
             }
+
+			if(Input.GetMouseButtonUp(0))
+			{
+				ReturnClickedObject();
+			}
 		}
 	}
 
