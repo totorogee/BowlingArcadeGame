@@ -9,7 +9,7 @@ public static class GameSave
     {
         get
         {
-            return PlayerPrefs.GetInt("First", 10);
+            return PlayerPrefs.GetInt("First", 0);
         }
         set
         {
@@ -68,11 +68,11 @@ public static class GameSave
     {
         get
         {
-			return PlayerPrefs.GetString("First_Stage", "Easy");
+			return PlayerPrefs.GetString("First_Stage", " ");
         }
         set
         {
-			PlayerPrefs.GetString("First_Stage", value);
+			PlayerPrefs.SetString("First_Stage", value);
         }
     }
 
@@ -84,7 +84,7 @@ public static class GameSave
         }
         set
         {
-			PlayerPrefs.GetString("Second_Stage", value);
+			PlayerPrefs.SetString("Second_Stage", value);
         }
     }
 
@@ -96,7 +96,7 @@ public static class GameSave
         }
         set
         {
-			PlayerPrefs.GetString("Third_Stage", value);
+			PlayerPrefs.SetString("Third_Stage", value);
         }
     }
 	public static string Fourth_Stage
@@ -107,7 +107,7 @@ public static class GameSave
         }
         set
         {
-			PlayerPrefs.GetString("Fourth_Stage", value);
+			PlayerPrefs.SetString("Fourth_Stage", value);
         }
     }
 	public static string Fifth_Stage
@@ -118,7 +118,7 @@ public static class GameSave
         }
         set
         {
-			PlayerPrefs.GetString("Fifth_Stage", value);
+			PlayerPrefs.SetString("Fifth_Stage", value);
         }
     }
 

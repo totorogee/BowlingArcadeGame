@@ -22,6 +22,9 @@ public class MainSceneUI : MonoBehaviour {
 	[SerializeField] private List<string> rankText = new List<string>();
 	[SerializeField] private List<string> endText = new List<string>();
     
+    /// <summary>
+    /// The rank. Rank = 0 if Score is too low for a Rank
+    /// </summary>
 	private int rank = 1;
 
 	// Count Down for game to Start;
@@ -103,8 +106,8 @@ public class MainSceneUI : MonoBehaviour {
                     gameReady = false;
                     GameTesting.Instance.GameStart = false;
                     endGameScore.text = GameController.Instance.TotalScore.ToString();
-                    // DEBUG
-                    rank = Random.Range(0, 5);
+
+					rank = SetRank(GameController.Instance.TotalScore);
 
                     endGameRank.text = rankText[rank];
                     endGameText.text = endText[rank];
@@ -131,6 +134,58 @@ public class MainSceneUI : MonoBehaviour {
 		Application.Instance.LoadScene(0);
 	}
 		
+	private int SetRank(int finalScore)
+	{
+		int result = 0;
 
+		List<int> record = new List<int>
+		{
+			GameSave.First_Score,
+			GameSave.Second_Score,
+			GameSave.Third_Score,
+			GameSave.Fourth_Score,
+			GameSave.Fifth_Score
+		};
 
+		List<string> stage = new List<string>
+        {
+            GameSave.First_Stage,
+			GameSave.Second_Stage,
+			GameSave.Third_Stage,
+			GameSave.Fourth_Stage,
+			GameSave.Fifth_Stage
+        };
+
+        for (int i = 0; i < 5; i++)
+		{
+			if (finalScore > record[i])
+			{
+				result = i + 1;
+				break;
+			}
+		}
+
+		if (result==0)
+		{
+			return 0;
+		}
+
+		record.Insert(result - 1, finalScore);
+		stage.Insert(result - 1, StageSetting.Instance.GetStage());
+
+		GameSave.First_Score = record[0];
+		GameSave.Second_Score = record[1];
+		GameSave.Third_Score = record[2];
+		GameSave.Fourth_Score = record[3];
+		GameSave.Fifth_Score = record[4];
+
+		GameSave.First_Stage = stage[0];
+		GameSave.Second_Stage = stage[1];
+		GameSave.Third_Stage = stage[2];
+		GameSave.Fourth_Stage = stage[3];
+		GameSave.Fifth_Stage = stage[4];
+
+		return result;
+	}
+    
 }

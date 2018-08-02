@@ -11,7 +11,6 @@ public class Leaderboard : MonoBehaviour
 
 	private void OnEnable()
 	{
-
 		SetText(0, GameSave.First_Score, GameSave.First_Stage);
 		SetText(1, GameSave.Second_Score, GameSave.Second_Stage);
 		SetText(2, GameSave.Third_Score, GameSave.Third_Stage);
