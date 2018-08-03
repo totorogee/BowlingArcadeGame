@@ -68,7 +68,7 @@ public class MainSceneUI : MonoBehaviour {
 
 	void Update () 
 	{
-		if (Input.GetKey("escape"))
+		if (Input.GetKeyDown("escape"))
         {
 			OnBackToMain();
         }

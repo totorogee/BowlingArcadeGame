@@ -36,7 +36,7 @@ public class OpeningSceneUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown("escape"))
         {
             if (leaderBoard.gameObject.activeSelf)
             {
